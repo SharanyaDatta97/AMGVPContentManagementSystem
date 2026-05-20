@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Mail, Phone, MapPin, Linkedin, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function Contact() {
@@ -23,8 +22,6 @@ export default function Contact() {
 
   return (
     <>
-      <Navbar />
-
       <section className="relative overflow-hidden border-b border-amg-line">
         <div className="absolute inset-0 grid-paper pointer-events-none"/>
         <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-24 relative">

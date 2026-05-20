@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Linkedin, ArrowRight } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CTASection from '../components/CTASection';
 
@@ -18,8 +17,6 @@ export default function AboutUs() {
 
   return (
     <>
-      <Navbar />
-
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden border-b border-amg-line">
         <div className="absolute inset-0 grid-paper pointer-events-none" />

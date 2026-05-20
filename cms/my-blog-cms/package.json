@@ -1,0 +1,39 @@
+{
+  "name": "my-blog-cms",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+  },
+  "dependencies": {
+    "@payloadcms/db-mongodb": "3.84.0",
+    "@payloadcms/next": "3.84.0",
+    "@payloadcms/richtext-lexical": "3.84.0",
+    "@payloadcms/ui": "3.84.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "graphql": "^16.8.1",
+    "mammoth": "^1.12.0",
+    "next": "16.2.3",
+    "payload": "3.84.0",
+    "raw-body": "^3.0.2",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "sharp": "0.34.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.19",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "5.7.3"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0"
+  }
+}

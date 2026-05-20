@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Download } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CTASection from '../components/CTASection';
 import { ARTICLES, FEATURED_DOWNLOADS } from '../mock';
@@ -8,7 +7,6 @@ import { ARTICLES, FEATURED_DOWNLOADS } from '../mock';
 export default function Resources() {
   return (
     <>
-      <Navbar />
       <section className="relative overflow-hidden border-b border-amg-line">
         <div className="absolute inset-0 grid-paper pointer-events-none"/>
         <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-24 relative">

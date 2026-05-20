@@ -5,8 +5,9 @@ export const NAV_LINKS = [
   { label: 'Founder Services', to: '/founder-services' },
  // { label: 'Pricing', to: '/pricing' },
   { label: 'Resources', to: '/resources' },
+  { label: 'About', to: '/about' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
-  {label:'About Us', to: '/about'},
   // {label:'Investment Readiness Program', to: '/investment-readiness-program'},
 ];
 

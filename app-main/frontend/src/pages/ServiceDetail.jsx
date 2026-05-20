@@ -1,7 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, Plus, Minus, AlertTriangle, CheckSquare, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CTASection from '../components/CTASection';
 import GauravImage from '../images/GauravImage.jpg'
@@ -36,8 +35,6 @@ export default function ServiceDetail() {
 
   return (
     <>
-      <Navbar />
-
       {/* HERO */}
       <section className={`relative overflow-hidden ${heroBg} border-b border-amg-line`}>
         <div className="absolute inset-0 grid-paper pointer-events-none opacity-40"/>

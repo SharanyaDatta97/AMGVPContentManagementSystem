@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, FileText, Sparkles, Calculator, TrendingUp, Users, ShieldCheck, MessageCircle, Briefcase } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CTASection from '../components/CTASection';
 import { SERVICES, FOUNDER_SERVICES_INTRO } from '../mock';
@@ -18,7 +17,6 @@ const ICONS = {
 export default function FounderServices() {
   return (
     <>
-      <Navbar />
       <section className="relative overflow-hidden border-b border-amg-line">
         <div className="absolute inset-0 grid-paper pointer-events-none"/>
         <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-28 relative">

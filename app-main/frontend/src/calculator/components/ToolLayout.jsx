@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import Navbar from '../../components/Navbar';
-
 const ToolLayout = ({ children, number, title, category, categoryColor, description }) => {
   return (
     <div className="App bg-white min-h-screen">
@@ -10,7 +8,6 @@ const ToolLayout = ({ children, number, title, category, categoryColor, descript
       <div className="absolute inset-0 bg-grid opacity-40 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)] pointer-events-none" />
 
       <div className="relative">
-        <Navbar />
         <div className="max-w-6xl mx-auto px-6 pt-10">
           {/* /<Link
             to="/"

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, FileText, Sparkles, Calculator, TrendingUp, Users, ShieldCheck, MessageCircle, Briefcase, CheckCircle2, Target, Globe, Linkedin, BadgeCheck } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CTASection from '../components/CTASection';
 import GauravImage from '../images/GauravImage.jpg';
@@ -84,8 +83,6 @@ const HOW_WE_WORK_STEPS = [
 export default function Home() {
   return (
     <>
-      <Navbar />
-
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 grid-paper pointer-events-none"/>
