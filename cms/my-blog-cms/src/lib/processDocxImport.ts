@@ -143,11 +143,10 @@ export async function processDocxImport(
       content: htmlContent,
       excerpt,
       publishedDate: new Date().toISOString(),
-      topics: [],
-      stages: [],
-      industries: [],
-      contentTypes: [],
-      funnelStage: null,
+      assetType: null,
+      problemCategories: [],
+      stageTypes: [],
+      sectors: [],
     },
   })
 

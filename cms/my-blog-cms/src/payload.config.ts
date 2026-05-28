@@ -7,16 +7,15 @@ import dotenv from 'dotenv'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
-import { ContentTypes } from './collections/ContentTypes'
+import { AssetTypes } from './collections/AssetTypes'
 import { DocumentImporter } from './collections/DocumentImporter'
-import { FunnelStages } from './collections/FunnelStages'
-import { Industries } from './collections/Industries'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
-import { Stages } from './collections/Stages'
-import { Topics } from './collections/Topics'
+import { ProblemCategories } from './collections/ProblemCategories'
+import { Sectors } from './collections/Sectors'
+import { StageTypes } from './collections/StageTypes'
 import { Users } from './collections/Users'
-import { seedDefaultTags } from './seed/defaultTags'
+import { seedTags } from './seed/seedTags'
 
 import dns from 'dns';
 dns.setServers(['8.8.8.8', '1.1.1.1']);
@@ -62,11 +61,10 @@ export default buildConfig({
   },
   collections: [
     Users,
-    Topics,
-    Stages,
-    Industries,
-    ContentTypes,
-    FunnelStages,
+    AssetTypes,
+    ProblemCategories,
+    StageTypes,
+    Sectors,
     Media,
     Posts,
     DocumentImporter,
@@ -82,6 +80,6 @@ export default buildConfig({
   sharp,
   plugins: [],
   onInit: async (payload) => {
-    await seedDefaultTags(payload)
+    await seedTags(payload)
   },
 })

@@ -68,11 +68,10 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
-    topics: Topic;
-    stages: Stage;
-    industries: Industry;
-    'content-types': ContentType;
-    'funnel-stages': FunnelStage;
+    'asset-types': AssetType;
+    'problem-categories': ProblemCategory;
+    'stage-types': StageType;
+    sectors: Sector;
     media: Media;
     posts: Post;
     'document-importers': DocumentImporter;
@@ -84,11 +83,10 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
-    topics: TopicsSelect<false> | TopicsSelect<true>;
-    stages: StagesSelect<false> | StagesSelect<true>;
-    industries: IndustriesSelect<false> | IndustriesSelect<true>;
-    'content-types': ContentTypesSelect<false> | ContentTypesSelect<true>;
-    'funnel-stages': FunnelStagesSelect<false> | FunnelStagesSelect<true>;
+    'asset-types': AssetTypesSelect<false> | AssetTypesSelect<true>;
+    'problem-categories': ProblemCategoriesSelect<false> | ProblemCategoriesSelect<true>;
+    'stage-types': StageTypesSelect<false> | StageTypesSelect<true>;
+    sectors: SectorsSelect<false> | SectorsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'document-importers': DocumentImportersSelect<false> | DocumentImportersSelect<true>;
@@ -158,9 +156,9 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "topics".
+ * via the `definition` "asset-types".
  */
-export interface Topic {
+export interface AssetType {
   id: string;
   name: string;
   slug: string;
@@ -169,9 +167,9 @@ export interface Topic {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stages".
+ * via the `definition` "problem-categories".
  */
-export interface Stage {
+export interface ProblemCategory {
   id: string;
   name: string;
   slug: string;
@@ -180,34 +178,26 @@ export interface Stage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "industries".
+ * via the `definition` "stage-types".
  */
-export interface Industry {
+export interface StageType {
   id: string;
   name: string;
   slug: string;
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "content-types".
+ * via the `definition` "sectors".
  */
-export interface ContentType {
+export interface Sector {
   id: string;
   name: string;
   slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "funnel-stages".
- */
-export interface FunnelStage {
-  id: string;
-  name: string;
-  slug: string;
+  icon?: string | null;
+  color?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -247,21 +237,28 @@ export interface Post {
   readTime?: string | null;
   author?: string | null;
   /**
-   * Optional label shown on the cover (e.g. Topic · AMG Venture Partners)
+   * Optional label shown on the cover (e.g. Problem Category · AMG Venture Partners)
    */
   coverLabel?: string | null;
   /**
    * HTML body for the article
    */
   content: string;
-  /**
-   * Assign at least one topic before publishing (optional for DOCX imports).
-   */
-  topics?: (string | Topic)[] | null;
-  stages?: (string | Stage)[] | null;
-  industries?: (string | Industry)[] | null;
-  contentTypes?: (string | ContentType)[] | null;
-  funnelStage?: (string | null) | FunnelStage;
+  assetType?: (string | null) | AssetType;
+  problemCategories?: (string | ProblemCategory)[] | null;
+  stageTypes?: (string | StageType)[] | null;
+  sectors?: (string | Sector)[] | null;
+  relatedServiceCta?:
+    | (
+        | 'pitch-deck-review'
+        | 'pitch-deck-creation'
+        | 'financial-model'
+        | 'valuation'
+        | 'investor-outreach'
+        | 'investment-readiness-review'
+        | 'ama-sessions'
+      )
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -316,24 +313,20 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
-        relationTo: 'topics';
-        value: string | Topic;
+        relationTo: 'asset-types';
+        value: string | AssetType;
       } | null)
     | ({
-        relationTo: 'stages';
-        value: string | Stage;
+        relationTo: 'problem-categories';
+        value: string | ProblemCategory;
       } | null)
     | ({
-        relationTo: 'industries';
-        value: string | Industry;
+        relationTo: 'stage-types';
+        value: string | StageType;
       } | null)
     | ({
-        relationTo: 'content-types';
-        value: string | ContentType;
-      } | null)
-    | ({
-        relationTo: 'funnel-stages';
-        value: string | FunnelStage;
+        relationTo: 'sectors';
+        value: string | Sector;
       } | null)
     | ({
         relationTo: 'media';
@@ -413,9 +406,9 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "topics_select".
+ * via the `definition` "asset-types_select".
  */
-export interface TopicsSelect<T extends boolean = true> {
+export interface AssetTypesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   updatedAt?: T;
@@ -423,9 +416,9 @@ export interface TopicsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stages_select".
+ * via the `definition` "problem-categories_select".
  */
-export interface StagesSelect<T extends boolean = true> {
+export interface ProblemCategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   updatedAt?: T;
@@ -433,31 +426,24 @@ export interface StagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "industries_select".
+ * via the `definition` "stage-types_select".
  */
-export interface IndustriesSelect<T extends boolean = true> {
+export interface StageTypesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "content-types_select".
+ * via the `definition` "sectors_select".
  */
-export interface ContentTypesSelect<T extends boolean = true> {
+export interface SectorsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "funnel-stages_select".
- */
-export interface FunnelStagesSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
+  icon?: T;
+  color?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -493,11 +479,11 @@ export interface PostsSelect<T extends boolean = true> {
   author?: T;
   coverLabel?: T;
   content?: T;
-  topics?: T;
-  stages?: T;
-  industries?: T;
-  contentTypes?: T;
-  funnelStage?: T;
+  assetType?: T;
+  problemCategories?: T;
+  stageTypes?: T;
+  sectors?: T;
+  relatedServiceCta?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -1,8 +1,28 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../components/Footer';
-import { fetchPostBySlug, fetchPosts } from '../api/posts';
+import { fetchPostBySlug, fetchPosts } from '../api/payloadClient';
 import './BlogPost.css';
+
+const CTA_LABELS = {
+  'pitch-deck-review': 'Pitch Deck Review',
+  'pitch-deck-creation': 'Pitch Deck Creation',
+  'financial-model': 'Financial Model',
+  valuation: 'Valuation',
+  'investor-outreach': 'Investor Outreach',
+  'investment-readiness-review': 'Investment Readiness Review',
+  'ama-sessions': 'AMA Sessions',
+};
+
+const ctaLinks = {
+  'pitch-deck-review': '/services/pitch-deck-review',
+  'pitch-deck-creation': '/services/pitch-deck-creation',
+  'financial-model': '/services/financial-model',
+  valuation: '/services/valuation',
+  'investor-outreach': '/services/investor-outreach',
+  'investment-readiness-review': '/services/investment-readiness-review',
+  'ama-sessions': '/services/ama-sessions',
+};
 
 function slugify(text) {
   return text
@@ -104,13 +124,14 @@ export default function BlogPost() {
 
   const authorName = post?.author || 'AMG Venture Partners Editorial Team';
   const readTime = post?.readTime || '8 min read';
+  const primaryCategory = post?.problemCategories?.[0];
   const coverLabel =
     post?.coverLabel ||
-    (post?.topics?.length
-      ? `${post.topics[0].name} · AMG Venture Partners`
-      : 'AMG Venture Partners');
-
-  const primaryTopic = post?.topics?.[0];
+    (primaryCategory
+      ? `${primaryCategory.name} · AMG Venture Partners`
+      : post?.assetType
+        ? `${post.assetType.name} · AMG Venture Partners`
+        : 'AMG Venture Partners');
 
   if (loading) {
     return (
@@ -160,10 +181,10 @@ export default function BlogPost() {
       <div className="breadcrumb">
         <Link to="/blog">Blog</Link>
         <span className="sep">›</span>
-        {primaryTopic && (
+        {primaryCategory && (
           <>
             <Link to="/blog" className="cat-badge">
-              {primaryTopic.name}
+              {primaryCategory.name}
             </Link>
             <span className="sep">›</span>
           </>
@@ -173,40 +194,38 @@ export default function BlogPost() {
 
       <div className="blog-header">
         <div className="post-date">{post.publishedDate}</div>
-        {post.topics?.length > 0 && (
-          <div className="topic-badges" aria-label="Topics">
-            {post.topics.map((t) => (
-              <span key={t.id} className="topic-badge">
-                {t.name}
-              </span>
-            ))}
-          </div>
-        )}
-        {(post.stages?.length > 0 ||
-          post.industries?.length > 0 ||
-          post.contentTypes?.length > 0 ||
-          post.funnelStage) && (
-          <div className="topic-badges" aria-label="Tags" style={{ marginTop: 8 }}>
-            {(post.stages || []).map((t) => (
+        <div className="topic-badges" aria-label="Tags">
+          {post.assetType && (
+            <span className="topic-badge" style={{ background: '#FEF3C7', color: '#92400E' }}>
+              {post.assetType.name}
+            </span>
+          )}
+          {(post.problemCategories || []).map((t) => (
+            <span key={`pc-${t.id}`} className="topic-badge">
+              {t.name}
+            </span>
+          ))}
+        </div>
+        {(post.stageTypes?.length > 0 || post.sectors?.length > 0) && (
+          <div className="topic-badges" aria-label="Additional tags" style={{ marginTop: 8 }}>
+            {(post.stageTypes || []).map((t) => (
               <span key={`st-${t.id}`} className="topic-badge" style={{ background: '#EEF2FF', color: '#3730A3' }}>
                 {t.name}
               </span>
             ))}
-            {(post.industries || []).map((t) => (
-              <span key={`in-${t.id}`} className="topic-badge" style={{ background: '#ECFDF5', color: '#065F46' }}>
+            {(post.sectors || []).map((t) => (
+              <span
+                key={`sec-${t.id}`}
+                className="topic-badge"
+                style={{
+                  background: t.color || '#ECFDF5',
+                  color: t.color ? '#fff' : '#065F46',
+                }}
+              >
+                {t.icon ? `${t.icon} ` : ''}
                 {t.name}
               </span>
             ))}
-            {(post.contentTypes || []).map((t) => (
-              <span key={`ct-${t.id}`} className="topic-badge" style={{ background: '#FEF3C7', color: '#92400E' }}>
-                {t.name}
-              </span>
-            ))}
-            {post.funnelStage && (
-              <span className="topic-badge" style={{ background: '#FCE7F3', color: '#831843' }}>
-                {post.funnelStage.name}
-              </span>
-            )}
           </div>
         )}
         <h1>{post.title}</h1>
@@ -221,10 +240,10 @@ export default function BlogPost() {
               {post.publishedDate}
               <span>·</span>
               {readTime}
-              {primaryTopic && (
+              {primaryCategory && (
                 <>
                   <span>·</span>
-                  {primaryTopic.name}
+                  {primaryCategory.name}
                 </>
               )}
             </div>
@@ -257,13 +276,42 @@ export default function BlogPost() {
             dangerouslySetInnerHTML={{ __html: processedContent }}
           />
 
+          {post.relatedServiceCta && ctaLinks[post.relatedServiceCta] && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                margin: '48px 0 32px',
+              }}
+            >
+              <Link
+                to={ctaLinks[post.relatedServiceCta]}
+                style={{
+                  display: 'inline-block',
+                  background: '#F4B400',
+                  color: '#0B1F3B',
+                  fontWeight: 700,
+                  fontSize: '16px',
+                  padding: '14px 32px',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  transition: 'opacity 0.2s',
+                }}
+              >
+                {CTA_LABELS[post.relatedServiceCta] || post.relatedServiceCta}
+              </Link>
+            </div>
+          )}
+
           {relatedPosts.length > 0 && (
             <div className="more-articles">
               <h2>More Articles</h2>
               <div className="article-grid">
                 {relatedPosts.map((rp) => (
                   <Link key={rp.id} to={`/blog/${rp.slug}`} className="article-card">
-                    <div className="ac-cat">{rp.topics?.[0]?.name || 'Insights'}</div>
+                    <div className="ac-cat">
+                      {rp.problemCategories?.[0]?.name || rp.assetType?.name || 'Insights'}
+                    </div>
                     <div className="ac-title">{rp.title}</div>
                     <div className="ac-desc">{rp.excerpt}</div>
                     <div className="ac-date">{rp.publishedDate}</div>
